@@ -3,9 +3,11 @@ import time
 import json
 from curl_cffi import requests as browser
 
-# Only monitoring requested streamers
+# Monitoring requested streamers
 STREAMERS = ["kaneljoseph"] 
-WEBHOOK_URL = os.environ.get("https://discord.com/api/webhooks/1509045829414027424/wtpYGuvyMSGYlwiq0cIMbcoCRCzVp1RZ28nFDyJLLyx6rNqI6XNJJShvx93AHsNUVP9b")
+
+# This now correctly looks for the variable you will set in Railway
+WEBHOOK_URL = os.environ.get("WEBHOOK_URL")
 HISTORY_FILE = "seen_clips.json"
 
 def get_seen_clips():
@@ -22,7 +24,6 @@ def save_seen_clips(data):
         json.dump(data, f)
 
 def get_latest_clip(slug):
-    # If the streamer doesn't exist on Kick, this API will safely return None
     url = f"https://kick.com/api/v2/channels/{slug}/clips?sort=recent"
     try:
         response = browser.get(url, impersonate="chrome124")
@@ -34,6 +35,9 @@ def get_latest_clip(slug):
     return None
 
 def send_to_discord(clip, slug):
+    if not WEBHOOK_URL:
+        print("Error: WEBHOOK_URL not set in environment variables.")
+        return
     data = {
         "embeds": [{
             "title": f"New Clip: {clip['title']}",
