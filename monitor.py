@@ -67,4 +67,4 @@ while True:
                 seen_data[slug].append(latest['id'])
                 save_seen_clips(seen_data)
     
-    time.sleep(300)
+    time.sleep(30)
