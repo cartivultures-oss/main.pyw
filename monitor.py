@@ -5,7 +5,7 @@ from curl_cffi import requests as browser
 
 # Only monitoring requested streamers
 STREAMERS = ["kaneljoseph"] 
-WEBHOOK_URL = os.environ.get("WEBHOOK_URL")
+WEBHOOK_URL = os.environ.get("https://discord.com/api/webhooks/1509045829414027424/wtpYGuvyMSGYlwiq0cIMbcoCRCzVp1RZ28nFDyJLLyx6rNqI6XNJJShvx93AHsNUVP9b")
 HISTORY_FILE = "seen_clips.json"
 
 def get_seen_clips():
